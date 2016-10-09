@@ -8,7 +8,12 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    <h3>Company:{{$company->name}}</h3>
+                    <hr>
+                    @foreach($company->machines as $machine)
+                        <h2>Machine_id:{{$machine->id}}</h2>
+                        <h3>Position_id:{{$machine->position->id}}</h3>
+                    @endforeach
                 </div>
             </div>
         </div>

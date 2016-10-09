@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\company;
 
 class HomeController extends Controller
 {
@@ -12,9 +14,17 @@ class HomeController extends Controller
      *
      * @return void
      */
+
+    protected $company;
+
     public function __construct()
     {
         $this->middleware('auth');
+        $this->company = Auth::user()->company;
+        $this->company->machines;
+        foreach($this->company->machines as $machine){
+            $machine->position;
+        }
     }
 
     /**
@@ -24,6 +34,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $company = $this->company;
+        return view('home',compact('company'));
+    }
+
+    public function status()
+    {
+        return $this->company;
     }
 }
