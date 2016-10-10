@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('header')
+<!-- 設定讓post可以連線 -->
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+@stopsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -15,12 +20,7 @@
                             <tbody>
                                 <tr>
                                     <td>連線狀態</td>
-                                    @if( $machine->conn_status == 1)
-                                        <td id='conn' class = 'info'>已連線</td>
-                                    @else
-                                        <td id='conn' class = 'danger'>斷線中</td>
-                                    @endif
-
+                                    <td id='conn'>尚未連接</td>
                                 </tr>
                                 <tr >
                                     <td>機台名稱</td>
@@ -55,15 +55,15 @@
                             <tbody>
                                 <tr>
                                     <td>Machine_X</td>
-                                    <td id='m_x'>{{$machine->position->m_x}}</td>
+                                    <td id='m_x'>未讀取</td>
                                 </tr>
                                 <tr>
                                     <td>Machine_Y</td>
-                                    <td id='m_y'>{{$machine->position->m_y}}</td>
+                                    <td id='m_y'>未讀取</td>
                                 </tr>
                                 <tr>
                                     <td>Machine_Z</td>
-                                    <td id='m_z'>{{$machine->position->m_z}}</td>
+                                    <td id='m_z'>未讀取</td>
                             </tbody>
                         </table>
                     </div>
@@ -79,15 +79,15 @@
                             <tbody>
                                 <tr>
                                     <td>Absolute_X</td>
-                                    <td id='abs_x'>{{$machine->position->abs_x}}</td>
+                                    <td id='abs_x'>未讀取</td>
                                 </tr>
                                 <tr>
                                     <td>Absolute_Y</td>
-                                    <td id='abs_y'>{{$machine->position->abs_y}}</td>
+                                    <td id='abs_y'>未讀取</td>
                                 </tr>
                                 <tr>
                                     <td>Absolute_Z</td>
-                                    <td id='abs_z'>{{$machine->position->abs_z}}</td>
+                                    <td id='abs_z'>未讀取</td>
                             </tbody>
                         </table>
                     </div>
