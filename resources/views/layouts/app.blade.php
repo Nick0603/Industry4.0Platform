@@ -55,6 +55,7 @@
                     <li><a href="{{ url('/home') }}">Home</a></li>
                     <li><a href="{{ url('/data/status') }}">Status</a></li>
                     <li><a href="{{ url('/data/machines/1') }}">即時監控</a></li>
+                    <li><a href="{{ url('/data/machines/1/test') }}">機台連線模擬</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

@@ -32,27 +32,51 @@ class DataController extends Controller
 
 	public function monitor($machine_index)
     {
-    	$company = Auth::user()->company;
-    	$machine = $company->machines[$machine_index-1];
-		$machine->position;
-        return view('machines.monitor',compact('machine'));
+        return view('machines.monitor');
     }
 
-	public function ajax_monitor(Request $request , $machine_index)
+	public function ajax_monitor($machine_index)
     {
         $company = Auth::user()->company;
     	$machine = $company->machines[$machine_index-1];
         $machine->position;
 
-        //operate:1 讀取完連線狀態後將其設為0(未連線)
-        $operate = $request->operate;
-        if($operate == 1){
-            $now_conn = $machine->conn_status;
+        //如果連線時鮮誤差超過 5 秒即視為斷線
+        if(abs($machine->latest_conn_at - time())<=5){
+            $machine->conn_status = 1;
+        }else{
             $machine->conn_status = 0;
-            $machine->save();
-            $machine->conn_status = $now_conn;
         }
 
     	return  $machine;
     }
+
+
+
+    public function test_monitor($machine_index)
+    {
+        return view('machines.test_monitor');
+    }
+
+
+    public function ajax_test_monitor($machine_index)
+    {
+        $company = Auth::user()->company;
+        $machine = $company->machines[$machine_index-1];
+        $machine->latest_conn_at = time();
+        $machine->save();
+
+        $position = $machine->position;
+        
+        $position->m_x += rand(-20, 20);
+        $position->m_y -= rand(-20, 20);
+        $position->m_z -= rand(-20, 20);
+        $position->abs_x += rand(-20, 20);
+        $position->abs_y -= rand(-20, 20);
+        $position->abs_z -= rand(-20, 20);
+        $position->save();
+
+        return 'Update!';
+    }
 }
+

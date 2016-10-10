@@ -15,7 +15,7 @@ class CreateMachinesTable extends Migration
         Schema::create('machines', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('company_id')->unsinged()->index();
-            $table->boolean('conn_status');
+            $table->bigInteger('latest_conn_at');
             $table->timestamps();
         });
     }

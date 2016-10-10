@@ -24,6 +24,8 @@ Route::group(['middleware' => ['web']], function(){
 	Route::get('/home', 'HomeController@index');
 	Route::get('/data/status', 'DataController@status');
 	Route::get('/data/machines/{machine_index}', 'DataController@monitor');
-	Route::post('/data/machines/{machine_index}','DataController@ajax_monitor');
+	Route::get('/data/machines/{machine_index}/ajax','DataController@ajax_monitor');
 
+	Route::get('/data/machines/{machine_index}/test','DataController@test_monitor');
+	Route::get('/data/machines/{machine_index}/test/ajax','DataController@ajax_test_monitor');
 });

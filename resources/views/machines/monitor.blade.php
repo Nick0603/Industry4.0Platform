@@ -3,7 +3,7 @@
 @section('header')
 <!-- 設定讓post可以連線 -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-@stopsection
+@endsection
 
 @section('content')
 <div class="container">
