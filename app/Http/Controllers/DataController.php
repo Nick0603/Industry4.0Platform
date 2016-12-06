@@ -41,7 +41,7 @@ class DataController extends Controller
     	$machine = $company->machines[$machine_index-1];
         $machine->position;
 
-        //如果連線時鮮誤差超過 5 秒即視為斷線
+        //如果連線時誤差超過 5 秒即視為斷線
         if(abs($machine->latest_conn_at - time())<=5){
             $machine->conn_status = 1;
         }else{
@@ -77,6 +77,36 @@ class DataController extends Controller
         $position->save();
 
         return 'Update!';
+    }
+
+
+    public function storeData_Position(Request $request,$machine_index)
+    {
+        $company = Auth::user()->company;
+        $machine = $company->machines[$machine_index-1];
+        $machine->latest_conn_at = time();
+        $machine->save();
+
+        $position = $machine->position;
+        
+        $position->m_x = $request->input('m_x');
+        $position->m_y = $request->input('m_y');
+        $position->m_z = $request->input('m_z');
+        $position->abs_x = $request->input('abs_x');
+        $position->abs_y = $request->input('abs_y');
+        $position->abs_z = $request->input('abs_z');
+        $position->save();
+
+        return 'Update!!';
+    }
+
+    public function test_storeData_Position($machine_index)
+    {
+        $company = Auth::user()->company;
+        $machine = $company->machines[$machine_index-1];
+        $position = $machine->position;
+
+        return view('test.storeDataPosition',compact('position'));
     }
 }
 

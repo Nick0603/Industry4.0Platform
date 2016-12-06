@@ -12,6 +12,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+    	'/data/machines/1',
+    	'/data/machines/2'
     ];
 }

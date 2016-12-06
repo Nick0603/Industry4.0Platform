@@ -28,4 +28,9 @@ Route::group(['middleware' => ['web']], function(){
 
 	Route::get('/data/machines/{machine_index}/test','DataController@test_monitor');
 	Route::get('/data/machines/{machine_index}/test/ajax','DataController@ajax_test_monitor');
+	Route::post('/data/machines/{machine_index}','StoreDataController@storeData_Position');
+	Route::get('/data/machines/{machine_index}/GET','StoreDataController@storeData_Position');
+	Route::get('/data/machines/{machine_index}/test/storeData','DataController@test_storeData_Position');
+
+	Route::get('/data/test/token','StoreDataController@getToken');
 });
