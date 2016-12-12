@@ -8,6 +8,6 @@ class Position extends Model
 {
     public function machines()
     {
-    	return $this->hasone(machine::class);
+    	return $this->belongsTo(machine::class);
     }
 }

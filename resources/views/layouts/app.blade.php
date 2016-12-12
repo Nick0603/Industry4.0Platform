@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>laravel</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
@@ -54,7 +53,8 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
                     <li><a href="{{ url('/data/status') }}">Status</a></li>
-                    <li><a href="{{ url('/data/machines/1') }}">即時監控</a></li>
+                    <li><a href="{{ url('/data/machines/1/immediate') }}">即時監控</a></li>
+                    <li><a href="{{ url('/data/machines/1/machineData') }}">加工資訊</a></li>
                     <li><a href="{{ url('/data/machines/1/test') }}">機台連線模擬</a></li>
                 </ul>
 

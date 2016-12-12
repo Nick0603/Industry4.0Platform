@@ -15,4 +15,9 @@ class Machine extends Model
     {
     	return $this->hasOne(position::class);
     }
+
+    public function uilizations()
+    {
+    	return $this->hasMany(utilization::class);
+    }
 }

@@ -23,6 +23,7 @@ class DataController extends Controller
         $company->machines;
         foreach($company->machines as $machine){
             $machine->position;
+            $machine->uilizations;
         }
 
         return $company;
@@ -51,8 +52,6 @@ class DataController extends Controller
     	return  $machine;
     }
 
-
-
     public function test_monitor($machine_index)
     {
         return view('machines.test_monitor');
@@ -78,6 +77,13 @@ class DataController extends Controller
 
         return 'Update!';
     }
+
+
+    public function data_uilization($machine_index)
+    {
+        return view('machines.utilizations');
+    }
+
 
 
     public function storeData_Position(Request $request,$machine_index)
