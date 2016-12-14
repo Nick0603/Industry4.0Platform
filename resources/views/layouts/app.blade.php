@@ -25,6 +25,8 @@
         }
     </style>
 </head>
+
+
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -40,21 +42,17 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    @if (Auth::guest())
-                        Laravel
-                    @else
-                        {{ Auth::user()->company->name }}
-                    @endif
+                    遠端監控系統
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
-                    <li><a href="{{ url('/data/status') }}">Status</a></li>
+                    <li><a href="{{ url('/home') }}">首頁</a></li>
                     <li><a href="{{ url('/data/machines/1/immediate') }}">即時監控</a></li>
-                    <li><a href="{{ url('/data/machines/1/machineData') }}">加工資訊</a></li>
+                    <li><a href="{{ url('/data/machines/1/machineData/utilization/latestOrder') }}">加工資訊</a></li>
+                    <li><a href="{{ url('/data/status') }}">Status</a></li>
                     <li><a href="{{ url('/data/machines/1/test') }}">機台連線模擬</a></li>
                 </ul>
 

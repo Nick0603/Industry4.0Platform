@@ -27,8 +27,14 @@ Route::group(['middleware' => ['web']], function(){
 	Route::get('/data/machines/{machine_index}/immediate', 'DataController@monitor');
 	Route::get('/data/machines/{machine_index}/immediate/ajax','DataController@ajax_monitor');
 
-	//讀取加工資料
-	Route::get('/data/machines/{machine_index}/machineData', 'DataController@data_uilization');
+	//讀取加工資料 - 稼動率
+	Route::get('/data/machines/{machine_index}/machineData/utilization/latestOrder', 'DataController@data_uilization_latest');
+
+	Route::get('/data/machines/{machine_index}/machineData/utilization/{Order_itemType}/ajax','DataController@data_uilization_ajax');
+
+	Route::get('/data/machines/{machine_index}/machineData/utilization/{Order_itemType}/{DisplayType}','DataController@data_uilization');
+
+	Route::post('/data/machines/{machine_index}/machineData/utilization/{Order_itemType}/{DisplayType}','DataController@data_uilization_updateRemark');
 
 	// 資料庫資料
 	Route::get('/data/status', 'DataController@status');

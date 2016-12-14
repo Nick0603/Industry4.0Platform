@@ -15,7 +15,6 @@ class CreateUtilizationsTable extends Migration
         Schema::create('utilizations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('machine_id')->unsinged()->index();
-            $table->integer('order_id')->unsinged()->index();
             $table->double('busyTimer');
             $table->double('idleTimer');
             $table->double('alarmTimer');

@@ -8,7 +8,7 @@ class Utilization extends Model
 {
     public function machine()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(machine::class);
     }
 
     public function remark()
@@ -16,4 +16,8 @@ class Utilization extends Model
     	return $this->hasOne(remark::class);
     }
 
+    public function order()
+    {
+    	return $this->belongsTo(order::class);
+    }
 }

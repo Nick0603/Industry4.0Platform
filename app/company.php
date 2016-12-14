@@ -15,4 +15,8 @@ class Company extends Model
     {
     	return $this->hasMany(machine::class);
     }
+    public function order()
+    {
+    	return $this->hasMany(order::class);
+    }
 }
