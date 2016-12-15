@@ -24,10 +24,12 @@ Route::group(['middleware' => ['web']], function(){
 	Route::get('/home', 'HomeController@index');
 
 	//讀取即時資料
+	Route::get('/data/machines/first/immediate', 'DataController@monitorFirst');
 	Route::get('/data/machines/{machine_index}/immediate', 'DataController@monitor');
 	Route::get('/data/machines/{machine_index}/immediate/ajax','DataController@ajax_monitor');
 
 	//讀取加工資料 - 稼動率
+	Route::get('/data/machines/first/machineData/utilization/latestOrder', 'DataController@data_uilization_First');
 	Route::get('/data/machines/{machine_index}/machineData/utilization/latestOrder', 'DataController@data_uilization_latest');
 
 	Route::get('/data/machines/{machine_index}/machineData/utilization/{Order_itemType}/ajax','DataController@data_uilization_ajax');
@@ -44,6 +46,7 @@ Route::group(['middleware' => ['web']], function(){
 
 	//目前關掉token及會員認證
 	Route::post('/data/machines/{machine_index}','StoreDataController@storeData_Position');
+	Route::get('/data/machines/{machine_index}/machineData/InsertUtilization/{order_id}','StoreDataController@storeData_utilization');
 
 	//測試傳輸資料的表單 post 傳輸
 	Route::get('/data/machines/{machine_index}/test/storeData','DataController@test_storeData_Position');

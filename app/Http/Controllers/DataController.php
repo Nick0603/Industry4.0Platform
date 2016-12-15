@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cookie;
 
 use App\Machine;
 use App\order;
@@ -35,6 +38,17 @@ class DataController extends Controller
     }
 
 
+    public function monitorFirst(Request $request)
+    {
+        $company = Auth::user()->company;
+        $fistMachine = $company->machines[0];
+
+        $value = $request->cookie('name');
+
+        //return response('Hello World!!!')->cookie('machineID',1,60);
+
+        return redirect('/data/machines/'.$fistMachine->id.'/immediate');
+    }
 
 	public function monitor($machine_index)
     {
@@ -82,9 +96,15 @@ class DataController extends Controller
 
         return 'Update!';
     }
-
+    public function data_uilization_First()
+    {
+        $company = Auth::user()->company;
+        $fistMachine = $company->machines[0];
+        return redirect('/data/machines/'.$fistMachine->id.'/machineData/utilization/latestOrder');
+    }
     public function data_uilization_latest($machine_index)
     {
+
         $machines = Auth::user()->company->machines;
         if($machines->count() < $machine_index){
             abort(404);
@@ -97,7 +117,7 @@ class DataController extends Controller
     public function data_uilization($machine_index,$Order_itemType,$DisplayType)
     {
         $machines = Auth::user()->company->machines;
-        if($machine_index <= 0  || $machine_index >= $machines->count()){
+        if($machine_index <= 0  || $machine_index > $machines->count()){
             abort(404);
         }
 
@@ -135,6 +155,7 @@ class DataController extends Controller
              ->join('orders','utilizations.order_id', '=', 'orders.id')
              ->where('machine_id',$machine_index)
              ->where('itemType',$Order_itemType)
+             ->orderBy('date')
              ->get();
 
         return $data;
@@ -193,19 +214,16 @@ class DataController extends Controller
 
 }
 
-
-
-
         /*  自動化測試用  DB薪資utilization資料
-        for($i=4;$i<=30;$i++){
+        for($i=1;$i<=30;$i++){
             $total = 24;
-            $busy = rand(17,21);$total-=$busy;
+            $busy = rand(17,23);$total-=$busy;
             $idle = rand(0,$total);$total-=$idle;
             $alarm = rand(0,$total);$total-=$alarm;
             $off = rand(0,$total);
 
             $u = new utilization();
-            $u->machine_id = 1;
+            $u->machine_id = 3;
             $u->order_id = 1;
             $u->date="2016-11-" .sprintf("%02d",$i);
             $u->busyTimer = $busy;

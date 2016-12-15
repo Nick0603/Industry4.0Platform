@@ -50,8 +50,9 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">首頁</a></li>
-                    <li><a href="{{ url('/data/machines/1/immediate') }}">即時監控</a></li>
-                    <li><a href="{{ url('/data/machines/1/machineData/utilization/latestOrder') }}">加工資訊</a></li>
+                    <li><a href="{{ url('/data/machines/first/immediate') }}">即時監控</a></li>
+                    <li><a href="{{ url('/data/machines/first/machineData/utilization/latestOrder') }}">加工資訊</a></li>
+
                     <li><a href="{{ url('/data/status') }}">Status</a></li>
                     <li><a href="{{ url('/data/machines/1/test') }}">機台連線模擬</a></li>
                 </ul>
@@ -63,6 +64,7 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
