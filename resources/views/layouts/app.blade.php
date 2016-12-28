@@ -18,6 +18,7 @@
     <style>
         body {
             font-family: '微軟正黑體';
+            font-size: 200%;
         }
 
         .fa-btn {

@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web']], function(){
 
 	//讀取即時資料
 	Route::get('/data/machines/first/immediate', 'DataController@monitorFirst');
+	Route::get('/data/machines/{machine_index}/immediate/alarm/{alarmtype}', 'DataController@sendAlarm');
 	Route::get('/data/machines/{machine_index}/immediate', 'DataController@monitor');
 	Route::get('/data/machines/{machine_index}/immediate/ajax','DataController@ajax_monitor');
 

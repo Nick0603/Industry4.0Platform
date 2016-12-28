@@ -14,6 +14,7 @@ use App\Machine;
 use App\order;
 use App\utilization;
 use App\remark;
+use Mail;
 
 class DataController extends Controller
 {
@@ -52,23 +53,25 @@ class DataController extends Controller
 
 	public function monitor($machine_index)
     {
-        return view('machines.monitor');
+        $company = Auth::user()->company;
+        $machine = $company->machines[$machine_index-1];
+
+        return view('machines.monitor',compact('machine'));
     }
 
 	public function ajax_monitor($machine_index)
     {
         $company = Auth::user()->company;
     	$machine = $company->machines[$machine_index-1];
-        $machine->position;
+        $position = $machine->position;
 
         //如果連線時誤差超過 5 秒即視為斷線
         if(abs($machine->latest_conn_at - time())<=5){
-            $machine->conn_status = 1;
-        }else{
-            $machine->conn_status = 0;
+            return  $position;
         }
 
-    	return  $machine;
+        return  -1;
+        
     }
 
     public function test_monitor($machine_index)
@@ -92,8 +95,9 @@ class DataController extends Controller
         $position->abs_x += rand(-20, 20);
         $position->abs_y += rand(-20, 20);
         $position->abs_z += rand(-20, 20);
+        $position->updated_at = time();
         $position->save();
-
+        return time();
         return 'Update!';
     }
     public function data_uilization_First()
@@ -210,6 +214,44 @@ class DataController extends Controller
         $position = $machine->position;
 
         return view('test.storeDataPosition',compact('position'));
+    }
+
+    public function sendAlarm($machine_index,$alarmtype)
+    {
+
+        $company = Auth::user()->company;
+        $machine = $company->machines[$machine_index-1];
+        
+        if($alarmtype == 'temperature'){
+            $alarmItem = '主軸溫度';
+        }else{
+            $alarmItem = '主軸負載電流';
+        }
+
+        $from =  [
+                    // 'email'=>'b10303008@gmail.com',
+                    // 'name'=>'Nick',
+                    'subject' => $alarmItem.'異常'
+                    
+                ];
+
+        //填寫收信人信箱
+        $to = ['email'=>Auth::user()->email,
+               'name'=>Auth::user()->name];
+        //信件的內容(即表單填寫的資料)
+        $data = ['company'=>$company->name,
+                 'machine'=> $machine->name,
+                 'email' => $company->email,
+                 'address'=>$company->address,
+                 'subject'=>'機台警訊，'.$alarmItem.'異常',
+                 'url'=>'http://localhost:8000/data/machines/$machine_index'.$machine_index.'/immediate',
+                 'msg'=>'內容'
+                 ];
+        //寄出信件
+        Mail::send('alarm.temperatureAlarm', $data, function($message) use ($from, $to) {
+            $message->to($to['email'], $to['name'])->subject($from['subject']);
+                });
+        return 'success';
     }
 
 }

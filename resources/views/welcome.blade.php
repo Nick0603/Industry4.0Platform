@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
 
-            <div class="jumbotron">
-              <h1>Hello, world!</h1>
+            <div class="col-md-12 jumbotron">
+              <img src="{{url('/image/systemHome2.jpg')}}" class="img-responsive" alt="Image" >
             </div>
 
             <div class="panel panel-info">

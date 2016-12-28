@@ -13,6 +13,8 @@ function drawChart(utilization){
             "axisAlpha": 0,
             "position": "left",
             "tickLength": 0,
+            "autoGridCount":false,
+            "gridCount":5
         }],
         "graphs": [{
             "balloonText": "[[category]]<br>"+
@@ -58,6 +60,6 @@ function drawChart(utilization){
     //chart.addListener("dataUpdated", zoomChart);
 }
 
-function zoomChart(){
-    chart.zoomToDates(new Date(2016, 11, 1), new Date(2016, 11, 5));
-}
+// function zoomChart(){
+//     chart.zoomToDates(new Date(2016, 11, 4), new Date(2016, 11, 5));
+// }

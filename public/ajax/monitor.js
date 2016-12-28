@@ -1,6 +1,5 @@
 // ajax
-
-
+var data_updated_at = 0;
 $(document).ready(function(){
 	//設定隨機等待連線時間，以防使用者連線衝突
 	loop_update(1000);
@@ -20,7 +19,6 @@ function monitor_ajax(){
         type: "GET",
 		url: window.location.href+'/ajax',
 	    success: function (data) {
-	    	console.log(data);
 	    	update_display(data);
 	    },
 	    error: function (data) {
@@ -30,8 +28,10 @@ function monitor_ajax(){
 
 }
 
-function update_display(machine){
-	if(machine.conn_status == 0){
+function update_display(resDate){
+	console.log(resDate);
+	if(resDate == -1){
+		console.log("取得資訊：機台中斷連線");
 		$('#conn').removeClass('info')
 				  .addClass('danger')
 				  .text('斷線中');
@@ -43,16 +43,20 @@ function update_display(machine){
 		$('#abs_y').text('未讀取');
 		$('#abs_z').text('未讀取');
 	}else{
-		$('#conn').removeClass('danger')
-				  .addClass('info')
-				  .text('已連線');
+		if(data_updated_at != resDate['updated_at'] ){
+			data_updated_at = resDate['updated_at'];
+			console.log("取得新資訊，更新時間："+ data_updated_at);
 
-		var postion = machine.position;
-		$('#m_x').text(postion.m_x);
-		$('#m_y').text(postion.m_y);
-		$('#m_z').text(postion.m_z);
-		$('#abs_x').text(postion.abs_x);
-		$('#abs_y').text(postion.abs_y);
-		$('#abs_z').text(postion.abs_z);
+			$('#conn').removeClass('danger')
+					  .addClass('info')
+					  .text('已連線');
+
+			$('#m_x').text(resDate['m_x']);
+			$('#m_y').text(resDate['m_y']);
+			$('#m_z').text(resDate['m_z']);
+			$('#abs_x').text(resDate['abs_x']);
+			$('#abs_y').text(resDate['abs_y']);
+			$('#abs_z').text(resDate['abs_z']);
+		}
 	}
 }
