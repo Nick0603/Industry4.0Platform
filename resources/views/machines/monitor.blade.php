@@ -3,6 +3,19 @@
 @section('header')
 <!-- 設定讓post可以連線 -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    
+    <script src="/amcharts/amcharts.js"></script>
+    <script src="/amcharts/serial.js"></script>
+    <script src="/amcharts/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="/amcharts/plugins/export/export.css" type="text/css" media="all" />
+    <script src="/amcharts/themes/light.js"></script>
+    <script src="/amcharts/themes/patterns.js"></script>
+    <style>
+        #chartdivSpinderLoad,#chartdivTemperature {
+            width   : 100%;
+            height  : 500px;
+        }           
+    </style>
 @endsection
 
 @section('content')
@@ -33,6 +46,7 @@
                                 <tr>
                                     <td>機台編號</td>
                                     <td>{{$machine->id}}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -52,15 +66,15 @@
                             <tbody>
                                 <tr >
                                     <td class="col-md-2 info">執行中的程式名稱</td>
-                                    <td id='GCode'>xxxxxxxxxxxxxxx</td>
+                                    <td id='runningCodeName'>待連線</td>
                                 </tr>
                                 <tr >
                                     <td class="col-md-2 info">執行中的程式行號</td>
-                                    <td id='GCode'>第1行</td>
+                                    <td id='runningCodeIndex'>待連線</td>
                                 </tr>
                                 <tr >
                                     <td class="col-md-2 info">執行中的 G Code</td>
-                                    <td id='GCode'>G28</td>
+                                    <td id='runningGCode'>待連線</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -86,6 +100,7 @@
                                 <tr>
                                     <td>機械座標 z</td>
                                     <td id='m_z'>未讀取</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -110,6 +125,7 @@
                                 <tr>
                                     <td>絕對座標 z</td>
                                     <td id='abs_z'>未讀取</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -117,15 +133,41 @@
             </div>
 
             <div class="panel panel-primary">
-                <div class="panel-heading">即時馬達負載電流</div>
-                    <div class="panel-body">
+                <div class="panel-heading"> 即時主軸資訊</div>
+                    <div class="panel-body" >
+
+                        <table class="table table-bordered ">
+
+                            <tbody>
+                                <tr >
+                                    <td class="col-md-3 info">主軸溫度(攝氏)</td>
+                                    <td id='temperature'>待連線</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="chartdivTemperature">未讀取到資料</div>
+
+                        <table class="table table-bordered ">
+                            <tbody>
+                                <tr >
+                                    <td class="col-md-3 info">主軸負載電流值</td>
+                                    <td id='spinderLoad'>待連線</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="chartdivSpinderLoad">未讀取到資料</div>
                     </div>
                 </div>
             </div>
+
+            
+
         </div>
     </div>
 @endsection
 
 @section('script')
+    <script src={{ asset("/ajax/spinderLoad.js") }}></script>
+    <script src={{ asset("/ajax/temperature.js") }}></script>
     <script src={{ asset('/ajax/monitor.js') }}></script>
 @endsection

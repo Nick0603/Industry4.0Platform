@@ -11,9 +11,9 @@ class Machine extends Model
         return $this->belongsTo(company::class);
     }
 
-    public function position()
+    public function immediateData()
     {
-    	return $this->hasOne(position::class);
+    	return $this->hasOne(immediateData::class);
     }
 
     public function utilizations()

@@ -18,7 +18,7 @@
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <td>公司名稱</td>
+                                    <td class="col-md-3">公司名稱</td>
                                     <td>{{Auth::user()->company->name}}</td>
                                 </tr>
                                 <tr >
@@ -27,7 +27,7 @@
                                 </tr>
                                 <tr>
                                     <td>公司地址</td>
-                                    <td></td>
+                                    <td>{{Auth::user()->company->address}}</td>
                                 </tr>
                                 <tr>
                                     <td>機台總數</td>

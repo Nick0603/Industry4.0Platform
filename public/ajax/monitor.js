@@ -1,8 +1,11 @@
 // ajax
 var data_updated_at = 0;
+var temperatureLimit = 40;
+var spinderLoadLimit = 80;
 $(document).ready(function(){
-	//設定隨機等待連線時間，以防使用者連線衝突
-	loop_update(1000);
+	drawChartSpinderLoad();
+	drawChartTemperature();
+	loop_update(2000);
  });
 
 function loop_update(delay_time){
@@ -26,12 +29,23 @@ function monitor_ajax(){
 	    }
     });
 
+	// //主軸負載
+	// $.ajax({
+
+ //        type: "GET",
+	// 	url: window.location.href+'/ajax/spindleLoad',
+	//     success: function (data) {
+	//     	update_display(data);
+	//     },
+	//     error: function (data) {
+	//         console.log('Error:' + data);
+	//     }
+ //    });
 }
 
-function update_display(resDate){
-	console.log(resDate);
-	if(resDate == -1){
-		console.log("取得資訊：機台中斷連線");
+function update_display(resData){
+	if(resData == -1){
+		// console.log("取得資訊：機台中斷連線");
 		$('#conn').removeClass('info')
 				  .addClass('danger')
 				  .text('斷線中');
@@ -43,20 +57,61 @@ function update_display(resDate){
 		$('#abs_y').text('未讀取');
 		$('#abs_z').text('未讀取');
 	}else{
-		if(data_updated_at != resDate['updated_at'] ){
-			data_updated_at = resDate['updated_at'];
-			console.log("取得新資訊，更新時間："+ data_updated_at);
+		if(data_updated_at != resData['updated_at'] ){
+			//flag
+			data_updated_at = resData['updated_at'];
 
 			$('#conn').removeClass('danger')
 					  .addClass('info')
 					  .text('已連線');
 
-			$('#m_x').text(resDate['m_x']);
-			$('#m_y').text(resDate['m_y']);
-			$('#m_z').text(resDate['m_z']);
-			$('#abs_x').text(resDate['abs_x']);
-			$('#abs_y').text(resDate['abs_y']);
-			$('#abs_z').text(resDate['abs_z']);
+			$('#runningCodeName').text(resData['CodeName']);
+			$('#runningCodeIndex').text(resData['runningCodeIndex']);
+			$('#runningGCode').text(resData['runningGCode']);
+			$('#spinderLoad').text(resData['spinderLoad'] + ' % ');
+			$('#temperature').text(resData['temperature'] + ' 度 ');
+
+			$('#m_x').text(resData['m_x']);
+			$('#m_y').text(resData['m_y']);
+			$('#m_z').text(resData['m_z']);
+			$('#abs_x').text(resData['abs_x']);
+			$('#abs_y').text(resData['abs_y']);
+			$('#abs_z').text(resData['abs_z']);
+			
+
+			insertData_temperature(resData);
+			insertData_spinderLoad(resData);
+
+			if(resData['spinderLoad']>spinderLoadLimit){
+				console.log("Alarm_spinderLoad");
+				sendAlarm('spinderLoad',resData);
+			}
+			if(resData['temperature']>temperatureLimit){
+				console.log("Alarm_temperature");
+				sendAlarm('temperature',resData)
+			}
 		}
 	}
+}
+
+
+function sendAlarm(type,alarmData){
+
+	if(type == 'temperature'){
+		var alarmValue = alarmData['temperature'];
+	}
+	if(type == 'spinderLoad'){
+		var alarmValue = alarmData['spinderLoad'];
+	}
+
+	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+	$.ajax({
+	    url: window.location.href+'/alarm/'+type,
+	    type: 'POST',
+	    data: {_token: CSRF_TOKEN,"time":alarmData['updated_at'],"alarmValue":alarmValue},
+	    dataType: 'JSON',
+	    success: function (data) {
+	        console.log(data);
+	    }
+	});
 }

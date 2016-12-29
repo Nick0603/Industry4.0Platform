@@ -15,6 +15,7 @@ class AddMachineBasicData extends Migration
         Schema::table('machines', function (Blueprint $table) {
             $table->string('name');
             $table->string('address');
+            $table->dropColumn('latest_conn_at');
         });
     }
 
@@ -27,7 +28,8 @@ class AddMachineBasicData extends Migration
     {
         Schema::table('machines', function (Blueprint $table) {
             $table->dropColumn('name');
-            $table->string('address');
+            $table->dropColumn('address');
+            $table->bigInteger('latest_conn_at');
         });
     }
 }

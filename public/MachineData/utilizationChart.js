@@ -1,6 +1,5 @@
 
 var chart;
-
 function drawChart(utilization){
     chart = AmCharts.makeChart("chartdiv", {
         "type": "serial",

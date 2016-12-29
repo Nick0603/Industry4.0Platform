@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLoadCurrents extends Migration
+class RenamePositionToImmediateDatas extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,8 @@ class CreateLoadCurrents extends Migration
      */
     public function up()
     {
-        Schema::create('load_currents', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        Schema::table('positions', function (Blueprint $table) {
+            Schema::rename('positions', 'immediate_Datas');
         });
     }
 
@@ -25,6 +24,8 @@ class CreateLoadCurrents extends Migration
      */
     public function down()
     {
-        Schema::drop('load_currents');
+        Schema::table('immediate_Datas', function (Blueprint $table) {
+            Schema::rename('immediate_Datas', 'positions');
+        });
     }
 }

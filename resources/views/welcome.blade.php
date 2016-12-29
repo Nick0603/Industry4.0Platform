@@ -12,47 +12,47 @@
             <div class="panel panel-info">
                 <div class="panel-heading">最新消息</div>
                  <table class="table text-center">
-                      <thead class="thead-inverse">
+                      <thead>
                         <tr>
-                          <th class="text-center" style="width: 5%">日期</th>
-                          <th class="text-center" style="width: 20%">標題</th>
-                          <th class="text-center" style="width: 75%">內容</th>
+                          <th class="text-center col-md-1">日期</th>
+                          <th class="text-center col-md-3">標題</th>
+                          <th class="text-center col-md-8">內容</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <th scope="row">12/13</th>
-                          <td>稼動率呈現設計圖</td>
+                          <th class="text-center" >12/13</th>
+                          <td>稼動率呈現設計與實作</td>
                           <td>
-                            blabla..
+                            使用amChart框架呈現資料庫中稼動率資料。
                           </td>
                         </tr>
                         <tr>
-                          <th scope="row">11/16</th>
+                          <th class="text-center">11/16</th>
                           <td>專題說明簡報</td>
                           <td>
-                            blabla..
+                            系統架構說明及目前進度報告
                           </td>
                         </tr>
                         <tr>
-                          <th scope="row">11/05</th>
-                          <td>即時監控測試完成</td>
+                          <th class="text-center">11/05</th>
+                          <td>即時監控測試測試完成</td>
                           <td>
-                            blabla..
+                            使用SkyMars抓取機台資訊再透過系統即時呈現
                           </td>
                         </tr>
                         <tr>
-                          <th scope="row">09/25</th>
+                          <th class="text-center">09/25</th>
                           <td>關聯式資料庫建立</td>
                           <td>
-                            blabla..
+                            建立資料基本架構(公司=>(使用者、機台)=>(加工資訊、訂單)
                           </td>
                         </tr>
                          <tr>
                           <th scope="row">09/24</th>
                           <td>網頁MVC架構初始設定</td>
                           <td>
-                            blabla..
+                            PHP-Laravel框架創立，使用會員系統框架
                           </td>
                         </tr>
                     </tbody>
@@ -109,8 +109,8 @@
                       <td>稼動率資訊</td>
                       <td>
                         <div class="progress">
-                          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                          60% Complete 
+                          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                          80% Complete 
                           </div>
                         </div>
                       </td>

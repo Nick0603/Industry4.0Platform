@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cookie;
 
+
 use App\Machine;
 use App\order;
 use App\utilization;
 use App\remark;
+use Carbon\Carbon;
 use Mail;
 
 class DataController extends Controller
@@ -44,10 +46,6 @@ class DataController extends Controller
         $company = Auth::user()->company;
         $fistMachine = $company->machines[0];
 
-        $value = $request->cookie('name');
-
-        //return response('Hello World!!!')->cookie('machineID',1,60);
-
         return redirect('/data/machines/'.$fistMachine->id.'/immediate');
     }
 
@@ -63,11 +61,11 @@ class DataController extends Controller
     {
         $company = Auth::user()->company;
     	$machine = $company->machines[$machine_index-1];
-        $position = $machine->position;
-
+        $immediateData = $machine->immediateData;
+        $updated_at = $immediateData['updated_at']->getTimestamp();
         //如果連線時誤差超過 5 秒即視為斷線
-        if(abs($machine->latest_conn_at - time())<=5){
-            return  $position;
+        if(abs($updated_at - time())<=5){
+            return  $immediateData;
         }
 
         return  -1;
@@ -84,20 +82,18 @@ class DataController extends Controller
     {
         $company = Auth::user()->company;
         $machine = $company->machines[$machine_index-1];
-        $machine->latest_conn_at = time();
-        $machine->save();
+        $immediateData = $machine->immediateData;
+        $immediateData->m_x += rand(-20, 20);
+        $immediateData->m_y += rand(-20, 20);
+        $immediateData->m_z += rand(-20, 20);
+        $immediateData->abs_x += rand(-20, 20);
+        $immediateData->abs_y += rand(-20, 20);
+        $immediateData->abs_z += rand(-20, 20);
+        $immediateData->temperature = rand(20, 50);
+        $immediateData->spinderLoad = rand(30, 95);
+        $immediateData->touch();
 
-        $position = $machine->position;
-        
-        $position->m_x += rand(-20, 20);
-        $position->m_y += rand(-20, 20);
-        $position->m_z += rand(-20, 20);
-        $position->abs_x += rand(-20, 20);
-        $position->abs_y += rand(-20, 20);
-        $position->abs_z += rand(-20, 20);
-        $position->updated_at = time();
-        $position->save();
-        return time();
+        $immediateData->save();
         return 'Update!';
     }
     public function data_uilization_First()
@@ -216,7 +212,7 @@ class DataController extends Controller
         return view('test.storeDataPosition',compact('position'));
     }
 
-    public function sendAlarm($machine_index,$alarmtype)
+    public function sendAlarm(Request $request,$machine_index,$alarmtype)
     {
 
         $company = Auth::user()->company;
@@ -245,10 +241,13 @@ class DataController extends Controller
                  'address'=>$company->address,
                  'subject'=>'機台警訊，'.$alarmItem.'異常',
                  'url'=>'http://localhost:8000/data/machines/$machine_index'.$machine_index.'/immediate',
-                 'msg'=>'內容'
+                 'msg'=>'內容',
+                 'alarmItem'=>$alarmItem,
+                 'alarmValue'=>$request->input('alarmValue'),
+                 'alarmTime'=>$request->input('time')
                  ];
         //寄出信件
-        Mail::send('alarm.temperatureAlarm', $data, function($message) use ($from, $to) {
+        Mail::send('alarm.spinderAlarm', $data, function($message) use ($from, $to) {
             $message->to($to['email'], $to['name'])->subject($from['subject']);
                 });
         return 'success';
