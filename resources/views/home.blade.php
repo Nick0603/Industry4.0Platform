@@ -43,19 +43,21 @@
                 <table class="table text-center">
                     <thead class="thead-inverse">
                         <tr>
-                            <th class="text-center" style="width: 5%">日期</th>
-                            <th class="text-center" style="width: 20%">標題</th>
-                            <th class="text-center" style="width: 75%">內容</th>
+                          <th class="text-center col-md-1">日期</th>
+                          <th class="text-center col-md-3">標題</th>
+                          <th class="text-center col-md-8">內容</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">12/13</th>
-                        <td>馬達研發突破</td>
-                        <td>
-                          blabla..
-                        </td>
-                    </tr>
+                    <tbody class="text-center" id="utilizationTable">
+                    @foreach($bulletinBoards as $information)
+                        <tr>
+                            <th scope="row">{{$information->created_at->month}}/{{$information->created_at->day}}</th>
+                            <td>{{$information->title}}</td>
+                            <td>
+                              {{$information->content}}
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

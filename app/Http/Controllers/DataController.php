@@ -52,15 +52,22 @@ class DataController extends Controller
 	public function monitor($machine_index)
     {
         $company = Auth::user()->company;
-        $machine = $company->machines[$machine_index-1];
-
+        $machine = Machine::where('id',$machine_index)->get();
+        $machine = $machine[0];
+        if($machine->company_id != $company->id){
+            abort(404);
+        }
         return view('machines.monitor',compact('machine'));
     }
 
 	public function ajax_monitor($machine_index)
     {
         $company = Auth::user()->company;
-    	$machine = $company->machines[$machine_index-1];
+        $machine = Machine::where('id',$machine_index)->get();
+        $machine = $machine[0];
+        if($machine->company_id != $company->id){
+            abort(404);
+        }
         $immediateData = $machine->immediateData;
         $updated_at = $immediateData['updated_at']->getTimestamp();
         //如果連線時誤差超過 5 秒即視為斷線

@@ -19,4 +19,9 @@ class Company extends Model
     {
     	return $this->hasMany(order::class);
     }
+
+    public function bulletinBoards()
+    {
+        return $this->hasMany(bulletinBoard::class);
+    }
 }

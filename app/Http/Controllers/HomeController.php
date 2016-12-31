@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use App\bulletinBoard;
 class HomeController extends Controller
 {
     /**
@@ -26,7 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $company = Auth::user()->company;
+        $bulletinBoards = bulletinBoard::where('company_id', $company->id)->orderBy('created_at')->get();
+        return view('home',compact('bulletinBoards'));
     }
 
 }

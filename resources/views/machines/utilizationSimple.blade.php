@@ -10,9 +10,7 @@
         height  : 500px;
     }           
 
-    #utilizationDeteal{
-      font-size: 200%;
-    }
+
 }
 
     </style>
