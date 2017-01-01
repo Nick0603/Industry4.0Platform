@@ -10,10 +10,9 @@ function drawChart(utilization){
         "dataProvider":utilization,
         "valueAxes": [{
             "axisAlpha": 0,
+            "max":100,
+            "min":0,
             "position": "left",
-            "tickLength": 0,
-            "autoGridCount":false,
-            "gridCount":5
         }],
         "graphs": [{
             "balloonText": "[[category]]<br>"+

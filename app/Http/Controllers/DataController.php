@@ -51,23 +51,27 @@ class DataController extends Controller
 
 	public function monitor($machine_index)
     {
+
         $company = Auth::user()->company;
         $machine = Machine::where('id',$machine_index)->get();
         $machine = $machine[0];
         if($machine->company_id != $company->id){
-            abort(404);
+            abort(404,'The machine_id is not yours.');
         }
+
         return view('machines.monitor',compact('machine'));
     }
 
 	public function ajax_monitor($machine_index)
     {
+
         $company = Auth::user()->company;
         $machine = Machine::where('id',$machine_index)->get();
         $machine = $machine[0];
         if($machine->company_id != $company->id){
-            abort(404);
+            abort(404,'The machine_id is not yours.');
         }
+
         $immediateData = $machine->immediateData;
         $updated_at = $immediateData['updated_at']->getTimestamp();
         //如果連線時誤差超過 5 秒即視為斷線
@@ -81,14 +85,25 @@ class DataController extends Controller
 
     public function test_monitor($machine_index)
     {
-        return view('machines.test_monitor');
+        $company = Auth::user()->company;
+        $machine = Machine::where('id',$machine_index)->get();
+        $machine = $machine[0];
+        if($machine->company_id != $company->id){
+            abort(404,'The machine_id is not yours.');
+        }
+        return view('machines.test_monitor',compact('machine'));
     }
 
 
     public function ajax_test_monitor($machine_index)
     {
+
         $company = Auth::user()->company;
-        $machine = $company->machines[$machine_index-1];
+        $machine = Machine::where('id',$machine_index)->get();
+        $machine = $machine[0];
+        if($machine->company_id != $company->id){
+            abort(404,'The machine_id is not yours.');
+        }
         $immediateData = $machine->immediateData;
         $immediateData->m_x += rand(-20, 20);
         $immediateData->m_y += rand(-20, 20);
@@ -112,23 +127,31 @@ class DataController extends Controller
     public function data_uilization_latest($machine_index)
     {
 
-        $machines = Auth::user()->company->machines;
-        if($machines->count() < $machine_index){
-            abort(404);
+        $company = Auth::user()->company;
+        $machine = Machine::where('id',$machine_index)->get();
+        $machine = $machine[0];
+        if($machine->company_id != $company->id){
+            abort(404,'The machine_id is not yours.');
         }
-        $machine = $machines[$machine_index - 1];
-        $itemType = $machine->latestOrder()->itemType;
-        return redirect('/data/machines/'.$machine_index.'/machineData/utilization/'.$itemType.'/all');
+        $latestoder = $machine->latestOrder();
+        if($latestoder){
+            $itemType = $latestoder->itemType;
+            return redirect('/data/machines/'.$machine_index.'/machineData/utilization/'.$itemType.'/all');
+        }else{
+            return redirect('/data/machines/'.$machine_index.'/machineData/utilization/empty/all');
+        }
+        
     }
 
     public function data_uilization($machine_index,$Order_itemType,$DisplayType)
     {
-        $machines = Auth::user()->company->machines;
-        if($machine_index <= 0  || $machine_index > $machines->count()){
-            abort(404);
+        $company = Auth::user()->company;
+        $machine = Machine::where('id',$machine_index)->get();
+        $machine = $machine[0];
+        if($machine->company_id != $company->id){
+            abort(404,'The machine_id is not yours.');
         }
 
-        $machine = $machines[$machine_index - 1];
 
         $selected_order = DB::table('utilizations')
              ->select(DB::raw('name,itemType'))
@@ -139,16 +162,16 @@ class DataController extends Controller
              ->get();
 
         if(!($selected_order)){
-            return Response::make('Not Found', 404);
+            return view('machines.utilizationsEmpty');
         }
         
         $selected_order = $selected_order[0];
         $orders = $machine->allOrders();
 
         if($DisplayType == 'all'){
-            return view('machines.utilizations',compact('selected_order','orders','DisplayType'));
+            return view('machines.utilizations',compact('machine','selected_order','orders','DisplayType'));
         }else{
-            return view('machines.utilizationSimple',compact('selected_order','orders','DisplayType'));
+            return view('machines.utilizationSimple',compact('machine','selected_order','orders','DisplayType'));
         }
         
     }
@@ -172,8 +195,18 @@ class DataController extends Controller
     {
 
         $company = Auth::user()->company;
-        $machine = $company->machines[$machine_index-1];
+        $machine = Machine::where('id',$machine_index)->get();
+        $machine = $machine[0];
+        if($machine->company_id != $company->id){
+            abort(404,'The machine_id is not yours.');
+        }
+        //$DisplayType為日期
         $utiziation = $machine->utilizations->where("date",$DisplayType)->first();
+
+        if(!($utiziation)){
+            abort(404,'The date is not found.');
+        }
+
         $remark = $utiziation->remark;
 
         if($remark==null){

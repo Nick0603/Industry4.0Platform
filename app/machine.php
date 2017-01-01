@@ -27,9 +27,14 @@ class Machine extends Model
     }
 
     public function latestOrder(){
-        $latestUtilization =  $this->utilizations->sortByDesc('created_at')->first();
-        $order = $latestUtilization->order;
-        return $order;
+        $utilization =  $this->utilizations->sortByDesc('created_at');
+        $latestUtilization = $utilization->first();
+        if($latestUtilization){
+            $order = $latestUtilization->order;
+            return $order;
+        }else{
+            return '';
+        }
     }
 
     public function allOrders(){
