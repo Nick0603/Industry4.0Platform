@@ -162,7 +162,7 @@ class DataController extends Controller
              ->get();
 
         if(!($selected_order)){
-            return view('machines.utilizationsEmpty');
+            return view('machines.utilizationsEmpty',compact('machine'));
         }
         
         $selected_order = $selected_order[0];
