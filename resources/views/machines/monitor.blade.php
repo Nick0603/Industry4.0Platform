@@ -150,7 +150,7 @@
                         <table class="table table-bordered ">
                             <tbody>
                                 <tr >
-                                    <td class="col-md-3 info">主軸負載電流值</td>
+                                    <td class="col-md-3 info">主軸負載值</td>
                                     <td id='spinderLoad'>待連線</td>
                                 </tr>
                             </tbody>
