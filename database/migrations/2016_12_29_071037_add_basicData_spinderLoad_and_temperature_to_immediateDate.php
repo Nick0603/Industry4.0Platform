@@ -12,7 +12,7 @@ class AddBasicDataSpinderLoadAndTemperatureToImmediateDate extends Migration
      */
     public function up()
     {
-        Schema::table('immediate_Datas', function (Blueprint $table) {
+        Schema::table('immediate_datas', function (Blueprint $table) {
             $table->string('CodeName');
             $table->string('runningGCode');
             $table->bigInteger('runningCodeIndex');
@@ -28,7 +28,7 @@ class AddBasicDataSpinderLoadAndTemperatureToImmediateDate extends Migration
      */
     public function down()
     {
-        Schema::table('immediate_Datas', function (Blueprint $table) {
+        Schema::table('immediate_datas', function (Blueprint $table) {
             $table->dropColumn('CodeName');
             $table->dropColumn('runningGCode');
             $table->dropColumn('runningCodeIndex');

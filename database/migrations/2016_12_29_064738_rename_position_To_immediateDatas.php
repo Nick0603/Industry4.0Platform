@@ -13,7 +13,7 @@ class RenamePositionToImmediateDatas extends Migration
     public function up()
     {
         Schema::table('positions', function (Blueprint $table) {
-            Schema::rename('positions', 'immediate_Datas');
+            Schema::rename('positions', 'immediate_datas');
         });
     }
 
@@ -24,8 +24,8 @@ class RenamePositionToImmediateDatas extends Migration
      */
     public function down()
     {
-        Schema::table('immediate_Datas', function (Blueprint $table) {
-            Schema::rename('immediate_Datas', 'positions');
+        Schema::table('immediate_datas', function (Blueprint $table) {
+            Schema::rename('immediate_datas', 'positions');
         });
     }
 }
