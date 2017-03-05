@@ -2,6 +2,8 @@
 var data_updated_at = 0;
 var temperatureLimit = 40;
 var spinderLoadLimit = 80;
+var lastAlarmTime = 0;
+
 $(document).ready(function(){
 	drawChartSpinderLoad();
 	drawChartTemperature();
@@ -81,21 +83,31 @@ function update_display(resData){
 
 			insertData_temperature(resData);
 			insertData_spinderLoad(resData);
-
-			if(resData['spinderLoad']>spinderLoadLimit){
-				console.log("Alarm_spinderLoad");
-				sendAlarm('spinderLoad',resData);
-			}
-			if(resData['temperature']>temperatureLimit){
-				console.log("Alarm_temperature");
-				sendAlarm('temperature',resData)
-			}
+			// 三十秒可推一次警告訊息
+			
+				
+				if(resData['spinderLoad']>spinderLoadLimit){
+					if(new Date - lastAlarmTime  > 30000){
+						lastAlarmTime = new Date;
+						console.log("Alarm_spinderLoad");
+						sendAlarm('spinderLoad',resData);
+					}
+				}
+				if(resData['temperature']>temperatureLimit){
+					if(new Date - lastAlarmTime  > 30000){
+						lastAlarmTime = new Date;
+						console.log("Alarm_temperature");
+						sendAlarm('temperature',resData)
+					}
+				}
+			
 		}
 	}
 }
 
 
 function sendAlarm(type,alarmData){
+
 
 	if(type == 'temperature'){
 		var alarmValue = alarmData['temperature'];
@@ -114,4 +126,12 @@ function sendAlarm(type,alarmData){
 	        console.log(data);
 	    }
 	});
+
+	$.ajax({
+	    url: "https://api.kotsms.com.tw/kotsmsapi-1.php?username=b10303008&password=nick19700101&dstaddr=0953258674&smbody=mechinne alarm!  " + "type:" + type + " value:" + alarmValue ,
+	    success: function (data) {
+	        console.log(data);
+	    }
+	});
+
 }
