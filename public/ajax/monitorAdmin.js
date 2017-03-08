@@ -126,4 +126,12 @@ function sendAlarm(type,alarmData){
 	        console.log(data);
 	    }
 	});
+
+	$.ajax({
+	    url: "https://api.kotsms.com.tw/kotsmsapi-1.php?username=E11617419&password=E11617419&dstaddr=0953258674&smbody=machine Alarm!  " + "type:" + type + " value:" + alarmValue ,
+	    success: function (data) {
+	        console.log(data);
+	    }
+	});
+
 }

@@ -54,13 +54,18 @@
                     @if ( ! isset($machine) )
                         <li><a href="{{ url('/data/machines/first/immediate') }}">即時監控</a></li>
                         <li><a href="{{ url('/data/machines/first/machineData/utilization/latestOrder') }}">加工資訊</a></li>
-                        <li><a href="{{ url('/data/status') }}">Status(測試用)</a></li>
-                        <li><a href="{{ url('/data/machines/1/test') }}">機台連線模擬(測試用)</a></li>
+                        
+                        @if (Auth::check() and Auth::user()->name == "admin"))
+                                <li><a href="{{ url('/data/status') }}">Status(測試用)</a></li>
+                                <li><a href="{{ url('/data/machines/1/test') }}">機台連線模擬(測試用)</a></li>
+                        @endif
                     @else
                             <li><a href="{{ url('/data/machines/'.$machine->id.'/immediate') }}">即時監控</a></li>
                             <li><a href="{{ url('/data/machines/'.$machine->id.'/machineData/utilization/latestOrder') }}">加工資訊</a></li>
-                            <li><a href="{{ url('/data/status') }}">Status(測試用)</a></li>
-                            <li><a href="{{ url('/data/machines/'.$machine->id.'/test') }}">機台連線模擬(測試用)</a></li>
+                        @if (Auth::check() and Auth::user()->name == "admin"))
+                                <li><a href="{{ url('/data/status') }}">Status(測試用)</a></li>
+                                <li><a href="{{ url('/data/machines/'.$machine->id.'/test') }}">機台連線模擬(測試用)</a></li>
+                        @endif
                     @endif
                 </ul>
 
@@ -117,9 +122,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
-    @if (!Auth::guest()){
+    @if (!Auth::guest())
         <script src="/layout/main.js"></script>
-    }
     @endif
 
     @yield('script')

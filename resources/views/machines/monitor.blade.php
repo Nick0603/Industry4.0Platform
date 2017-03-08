@@ -169,5 +169,11 @@
 @section('script')
     <script src={{ asset("/ajax/spinderLoad.js") }}></script>
     <script src={{ asset("/ajax/temperature.js") }}></script>
-    <script src={{ asset('/ajax/monitor.js') }}></script>
+    
+    @if (Auth::user()->name == "admin"))
+        <script src={{ asset('/ajax/monitorAdmin.js') }}></script>
+    @else
+        <script src={{ asset('/ajax/monitor.js') }}></script>
+    @endif
+    
 @endsection

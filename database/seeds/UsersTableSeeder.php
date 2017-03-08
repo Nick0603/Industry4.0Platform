@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'company_id' => 1,
-                'name' => 'Nick Chen',
+                'name' => 'admin',
                 'email' => 'b10303008@gmail.com',
                 'password' => '$2y$10$6QTwG9nkmmolfu880087DuNK6wGZvtz7ajl5P2ye5XiOgdnKQN/Ny',
                 'remember_token' => 'GfClsPgsxRm59QmFnTHnFrWsQlzkIBYkHh2gohVIHrsXV8VPDj0wDfRQj1EH',
@@ -84,6 +84,18 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2016-12-31 02:08:28',
                 'updated_at' => '2016-12-31 03:01:56',
             ),
+            6 => 
+            array (
+                'id' => 7,
+                'company_id' => 1,
+                'name' => 'guest',
+                'email' => 'guest@gmail.com',
+                'password' => '$2y$10$2R9An49g.opYYiR8tq9Qje6hy3NPEQLUtyUl7cXZLFUav8HLzkVxK',
+                'remember_token' => 'Vdlk4xzQAj3IAunB9G1WBtHEFq4P3z4aOp93Qf5H6caXeAgcJh4cJNSYa6HB',
+                'created_at' => '2016-12-31 02:08:28',
+                'updated_at' => '2016-12-31 03:01:56',
+            )
+            
         ));
         
         
