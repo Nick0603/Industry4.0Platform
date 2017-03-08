@@ -261,7 +261,7 @@ class DataController extends Controller
         if($alarmtype == 'temperature'){
             $alarmItem = '主軸溫度';
         }else{
-            $alarmItem = '主軸負載電流';
+            $alarmItem = '主軸負載';
         }
 
         $from =  [
@@ -280,7 +280,7 @@ class DataController extends Controller
                  'email' => $company->email,
                  'address'=>$company->address,
                  'subject'=>'機台警訊，'.$alarmItem.'異常',
-                 'url'=>'http://localhost:8000/data/machines/$machine_index'.$machine_index.'/immediate',
+                 'url'=>'http://localhost:8000/data/machines/'.$machine_index.'/immediate',
                  'msg'=>'內容',
                  'alarmItem'=>$alarmItem,
                  'alarmValue'=>$request->input('alarmValue'),

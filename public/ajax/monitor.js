@@ -128,7 +128,7 @@ function sendAlarm(type,alarmData){
 	});
 
 	$.ajax({
-	    url: "https://api.kotsms.com.tw/kotsmsapi-1.php?username=b10303008&password=nick19700101&dstaddr=0953258674&smbody=mechinne alarm!  " + "type:" + type + " value:" + alarmValue ,
+	    url: "https://api.kotsms.com.tw/kotsmsapi-1.php?username=E11617419&password=E11617419&dstaddr=0953258674&smbody=machine Alarm!  " + "type:" + type + " value:" + alarmValue ,
 	    success: function (data) {
 	        console.log(data);
 	    }
