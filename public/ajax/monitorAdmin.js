@@ -126,12 +126,22 @@ function sendAlarm(type,alarmData){
 	        console.log(data);
 	    }
 	});
-
-	$.ajax({
-	    url: "https://api.kotsms.com.tw/kotsmsapi-1.php?username=E11617419&password=E11617419&dstaddr=0953258674&smbody=machine Alarm!  " + "type:" + type + " value:" + alarmValue ,
-	    success: function (data) {
-	        console.log(data);
-	    }
-	});
+	
+	// 因主軸單字拼錯，故先以判斷式判斷，移除簡訊傳錯，spinder  => spindle
+	if(type == 'spinderLoad'){
+		$.ajax({
+			url: "https://api.kotsms.com.tw/kotsmsapi-1.php?username=E11617419&password=E11617419&dstaddr=0953258674&smbody=machine Alarm!  " + "type:" + "spinder load" + " value:" + alarmValue ,
+			success: function (data) {
+				console.log(data);
+			}
+		});
+	}else{
+		$.ajax({
+			url: "https://api.kotsms.com.tw/kotsmsapi-1.php?username=E11617419&password=E11617419&dstaddr=0953258674&smbody=machine Alarm!  " + "type:" + type + " value:" + alarmValue ,
+			success: function (data) {
+				console.log(data);
+			}
+		});
+	}
 
 }
