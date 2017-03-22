@@ -1,14 +1,12 @@
 # 工業4.0平台建置
 
 ![](http://i.picasion.com/pic85/6d8c26d6594c2b5e1d9080bd8e27d1f9.gif)
-## 說明
-
 ## Documentation
 - [Laravel website](http://laravel.com/docs).
 - [SkyMars Express](http://faremo.pmc.org.tw/RegisterServer/PageIndex.aspx?Language=TW)
 - [gmail 發信](https://developers.google.com/gmail/api/?hl=zh-TW)
-   - 帳號無二階段認證，需開啟[低應用程式許可](https://www.google.com/settings/security/lesssecureapps)
-   - 帳號有二階段認證，則需另外申請[應用程式密碼申請](https://developers.google.com/gmail/api/?hl=zh-TW)
+  - 帳號無二階段認證，需開啟[低應用程式許可](https://www.google.com/settings/security/lesssecureapps)
+  - 帳號有二階段認證，則需另外申請[應用程式密碼申請](https://developers.google.com/gmail/api/?hl=zh-TW)
 - [簡訊王 api](https://www.kotsms.com.tw/index.php?selectpage=pagenews&kind=4&viewnum=238)
 
 ## Development
@@ -26,11 +24,9 @@ php artisan key:generate
 php artisan migration
 php artisan db:seed
 php artisan serve
+# 開啟 localhost:8000
+# 測試帳號：guest@gmail.com  密碼：guestguest
 ```
-開啟 localhost:8000
-測試帳號：
-- 帳號：guest@gmail.com
-- 密碼：guestguest
 
 ### .env檔範例
 ```
