@@ -1,4 +1,4 @@
-# Laravel PHP Framework
+# 工業4.0平台建置
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
 [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
@@ -6,22 +6,58 @@
 [![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
 [![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
 
-## Official Documentation
+## Documentation
+- [Laravel website](http://laravel.com/docs).
+- [SkyMars 參ㄇwebsite](http://faremo.pmc.org.tw/RegisterServer/PageIndex.aspx?Language=TW)
+- [gmail 發信](https://developers.google.com/gmail/api/?hl=zh-TW)
+  - 帳號無二階段認證，需開啟[低應用程式許可](https://www.google.com/settings/security/lesssecureapps)
+  - 帳號有二階段認證，則需另外申請[應用程式密碼申請](https://developers.google.com/gmail/api/?hl=zh-TW)
+- [簡訊王 api]
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+## Development
+開發環境可以使用 [wagon](http://www.laravel-dojo.com/opensource/wagon)
+確認有composer、php、mysql可用
+```
+git clone https://github.com/Nick0603/Industry4.0Platform.git
+cd Industry4.0Platform
+composer install
 
-## Contributing
+cp .env.sample .env
+vim .env
+# .env範例 在下方
+php artisan key:generate
+php artisan migration
+php artisan db:seed
+php artisan serve
+```
+### .env檔範例
+```
+APP_ENV=local
+APP_DEBUG=true
+APP_KEY=  由待會的 php artisan key:generate  產生
+APP_URL=http://localhost
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE= __________
+DB_USERNAME= __________
+DB_PASSWORD= __________
 
-## Security Vulnerabilities
+CACHE_DRIVER=file
+SESSION_DRIVER=file
+QUEUE_DRIVER=sync
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME= yourAccount@gmail.com
+MAIL_PASSWORD= yourPassword #如果有二階段認證帳號，改填api key，詳情請看document
+MAIL_ENCRYPTION=tls
+```
