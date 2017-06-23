@@ -1,5 +1,9 @@
 # 工業4.0平台建置
 
+## 測試：
+- 網址：http://industry4platform.herokuapp.com/
+- 帳：admin@gmail.com 密：123456789
+
 ![](http://i.picasion.com/pic85/6d8c26d6594c2b5e1d9080bd8e27d1f9.gif)
 ## Documentation
 - [Laravel website](http://laravel.com/docs).
